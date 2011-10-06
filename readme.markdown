@@ -2,6 +2,19 @@
 
   Python-Eqentia is a low level wrapper REST based client for python to access the JSON data from Eqentia's curation platform.  This library was built to pair with a clients portal to extract headlines and entity data for local storage to seamless integration into an application.  Please consultant the Eqentia API documentation for rules and guidelines for using their API with your application.  
 
+## Eqentia API Support
+
+  Currently v0.1 of Python-Eqentia supports Eqentia's v0.9.5 and the following endpoints
+  
+  * headlines
+  * entities
+  * connections
+  * connections maps
+  * curation
+  * news groups
+  * navigation
+  * hot companies
+  * hot connections
 
 # Installation
 
@@ -39,4 +52,7 @@
     ## Access Hot Companies
     hot_companies = ec.hot_companies()
 
+# Todo
 
+  * Add unittests
+  * add iterators for calls with pagination (include sleep/timeout delays to observe api rules)
