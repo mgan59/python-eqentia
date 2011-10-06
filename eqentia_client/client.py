@@ -13,7 +13,7 @@ __version__ = "0.1"
 import urllib
 import urllib2
 import sys
-
+import logging
 
 # The user agent string sent to eqentias api when making requests. If you are
 # using this module in your own application, you should probably fork the library
@@ -41,9 +41,13 @@ class EqentiaRestClient(object):
             
         url = self.base_url % (self.portal, end_point, urllib.urlencode(params))
         
-        request = urllib2.Request(url=url)
-        request.add_header("User-agent",USER_AGENT)
-        response = urllib2.urlopen(request)
+        try:
+            request = urllib2.Request(url=url)
+            request.add_header("User-agent",USER_AGENT)
+            response = urllib2.urlopen(request)
+        except urllib2.URLError:
+            logging.error('Invalid URL for API connection')
+            return
         return response.read()
         
         
