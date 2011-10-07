@@ -15,7 +15,6 @@ class EqentiaRestIterator(object):
         self.results = None
         self.internal_document_index = 0
         ## if start_page set inject
-        print kwargs
         if 'start_page' in kwargs:
             self.start_page = kwargs['start_page']
         else:
@@ -48,8 +47,6 @@ class EqentiaRestIterator(object):
             self.internal_document_index = 0
             ## inject our pagination in here
             self.iterator_kwargs['page'] = self.current_page
-            #print '** kwargs check'
-            #print self.iterator_kwargs
             self.results = self.client._request(end_point=self.end_point, **self.iterator_kwargs)
             logging.info('-------- Current Results Page  %d ----------'% self.current_page)
             logging.info('-------- Accessed Documents    %d ----------'% len(self.results['documents']))
