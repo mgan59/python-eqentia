@@ -4,7 +4,7 @@
 
 ## Eqentia API Support
 
-  Currently v0.1 of Python-Eqentia supports Eqentia's v0.9.5 and the following endpoints
+  Currently v0.3 of Python-Eqentia supports Eqentia's v0.9.5 and the following endpoints
   
   * headlines
   * entities
@@ -15,6 +15,18 @@
   * navigation
   * hot companies
   * hot connections
+  
+### Iterators
+
+  As of v0.3 Iterators were added for endpoints that accept the `page` parameter.
+  
+  * headlines
+  * entities
+  * connections
+  * news groups
+  * curation
+  
+  These iterators provides a seamless interaction with a given api without having to paginate your data requests.  Allowing for easier content digestion.
 
 # Installation
 
@@ -31,6 +43,8 @@
 
 # Usage
 
+## Basic API Endpoint usage 
+
   First step is to include python-eqentia once installed
   
     from eqentia_client.client import EqentiaRestClient
@@ -42,7 +56,7 @@
     
     ## example of several calls
     ## will return all headlines for the first page - by default
-    headline_news = ec.headlines()
+    headline_news = ec.headlines(page=1)
     
     ## An endpoint accepts params as keyword arguments (kwargs)
     ## to get second page, pass the page parameter
@@ -51,8 +65,36 @@
     
     ## Access Hot Companies
     hot_companies = ec.hot_companies()
+    
+    ## access the data from headline_news
+    for headline in headline_news['documents']:
+        ## will print a dictionary obj contain the JSON fields
+        print headline
+        
+    
+## Using the Iterators
 
+  Similar to the above include the library and instantiate the RestClient like before.  Note these are new and still need tested fully, use at your own risk :)
+  
+      from eqentia_client.client import EqentiaRestClient
+      ec = EqentiaRestClient(api_token='yourtokengoeshere', portal='portalname')
+      
+  To use a given headline as an iterator just make the call without the `page` and by default an iterator is returned
+  
+    for headline in client.headlines():
+        ## will print the dictionary
+        print headline
+        
+  For the Iterators there are additional params to control the start and max pages
+  
+      for headline in client.headlines(start_page=2, max_page=4):
+          ## will print the dictionary
+          print headline
+          
+  
 # Todo
 
-  * Add unittests
-  * add iterators for calls with pagination (include sleep/timeout delays to observe api rules)
+  * Add unittest support for generators
+  * Add support for timers for iterators/generators
+  * Add Param validation
+  * Add decorator to do a proxy for page/not-page calls in client

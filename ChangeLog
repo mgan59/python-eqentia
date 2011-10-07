@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3 - Iterators Add
+
+Added iterators :)
+
 ## 0.2 - Tests & Fixes
 
 Added in the tests to ensure data is coming back for each api endpoint.  Also added exception handling to URL open
