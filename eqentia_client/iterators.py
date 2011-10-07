@@ -15,8 +15,9 @@ class EqentiaRestIterator(object):
         self.results = None
         self.internal_document_index = 0
         ## if start_page set inject
+        print kwargs
         if 'start_page' in kwargs:
-            self.start_page = kwargs.start_page
+            self.start_page = kwargs['start_page']
         else:
             self.start_page = 1
         
@@ -32,7 +33,10 @@ class EqentiaRestIterator(object):
             kwargs['per_page'] = 200
         self.iterator_kwargs = kwargs
         
-        self.max_page = 100  ## hopefully you don't hit 100 pages
+        if 'max_page' in kwargs:
+            self.max_page = kwargs['max_page']
+        else:
+            self.max_page = 10
         
     def __iter__(self):
         return self
