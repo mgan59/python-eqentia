@@ -7,13 +7,14 @@ Rules for Eqentia API
 Total Eqentia API Request:  1 request every 10 seconds
 Identical API Requests:     1 request every 5 minutes
 """
-__version__ = "0.1"
+__version__ = "0.2"
 
 
 import urllib
 import urllib2
 import sys
 import logging
+import simplejson
 
 # The user agent string sent to eqentias api when making requests. If you are
 # using this module in your own application, you should probably fork the library
@@ -45,10 +46,11 @@ class EqentiaRestClient(object):
             request = urllib2.Request(url=url)
             request.add_header("User-agent",USER_AGENT)
             response = urllib2.urlopen(request)
+            json_dict = simplejson.loads(response.read())
         except urllib2.URLError:
             logging.error('Invalid URL for API connection')
-            return
-        return response.read()
+            return False
+        return json_dict
         
         
     def headlines(self, **kwargs):
@@ -58,8 +60,9 @@ class EqentiaRestClient(object):
         end_point = 'entity/%d' % entity_id
         return self._request(end_point=end_point, **kwargs)
         
-    def connections(self, **kwargs):
-        return self._request(end_point='connection', **kwargs)
+    def connections(self, connection_id=None, **kwargs):
+        end_point = 'connection/%d' % connection_id
+        return self._request(end_point=end_point, **kwargs)
         
     def connection_maps(self, **kwargs):
         return self._request(end_point='connections_map', **kwargs)

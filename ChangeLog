@@ -1,0 +1,12 @@
+# Changelog
+
+## 0.2 - Tests & Fixes
+
+Added in the tests to ensure data is coming back for each api endpoint.  Also added exception handling to URL open
+and to simplejson.load.  API calls now convert the json-string to a python dictionary.
+
+Fixed a parameter/endpoint issue with connections
+
+## 0.1 - Initial Release
+
+Created first round of api endpoints and calls to get a string of json text
